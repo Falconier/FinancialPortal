@@ -42,13 +42,5 @@ namespace FinacialPlanner2.Models
         {
             return new ApplicationDbContext();
         }
-
-        public DbSet<Transaction> Transactions { get; set; }
-
-        public DbSet<PersonalAccount> Accounts { get; set; }
-
-        public DbSet<Invite> Invites { get; set; }
-
-
     }
 }

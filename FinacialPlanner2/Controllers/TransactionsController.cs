@@ -17,7 +17,7 @@ namespace FinacialPlanner2.Controllers
         // GET: Transactions
         public ActionResult Index()
         {
-            var transactions = db.Transactions.Include(t => t.AspNetUser).Include(t => t.Category).Include(t => t.PersonalAccount);
+            var transactions = db.Transactions.Include(t => t.User).Include(t => t.Category).Include(t => t.PersonalAccount);
             return View(transactions.ToList());
         }
 
@@ -39,7 +39,7 @@ namespace FinacialPlanner2.Controllers
         // GET: Transactions/Create
         public ActionResult Create()
         {
-            ViewBag.EnteredById = new SelectList(db.AspNetUsers, "Id", "FirstName");
+            ViewBag.EnteredById = new SelectList(db.Users, "Id", "FirstName");
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
             ViewBag.AccountId = new SelectList(db.PersonalAccounts, "Id", "Name");
             return View();
@@ -59,7 +59,7 @@ namespace FinacialPlanner2.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.EnteredById = new SelectList(db.AspNetUsers, "Id", "FirstName", transaction.EnteredById);
+            ViewBag.EnteredById = new SelectList(db.Users, "Id", "FirstName", transaction.EnteredById);
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", transaction.CategoryId);
             ViewBag.AccountId = new SelectList(db.PersonalAccounts, "Id", "Name", transaction.AccountId);
             return View(transaction);
@@ -77,7 +77,7 @@ namespace FinacialPlanner2.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.EnteredById = new SelectList(db.AspNetUsers, "Id", "FirstName", transaction.EnteredById);
+            ViewBag.EnteredById = new SelectList(db.Users, "Id", "FirstName", transaction.EnteredById);
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", transaction.CategoryId);
             ViewBag.AccountId = new SelectList(db.PersonalAccounts, "Id", "Name", transaction.AccountId);
             return View(transaction);
@@ -96,7 +96,7 @@ namespace FinacialPlanner2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EnteredById = new SelectList(db.AspNetUsers, "Id", "FirstName", transaction.EnteredById);
+            ViewBag.EnteredById = new SelectList(db.Users, "Id", "FirstName", transaction.EnteredById);
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", transaction.CategoryId);
             ViewBag.AccountId = new SelectList(db.PersonalAccounts, "Id", "Name", transaction.AccountId);
             return View(transaction);

@@ -10,116 +10,107 @@ using FinacialPlanner2.Models;
 
 namespace FinacialPlanner2.Controllers
 {
-    public class PersonalAccountsController : Controller
+    public class HouseholdsController : Controller
     {
         private jacobemory_budgetdatabase db = new jacobemory_budgetdatabase();
 
-        // GET: PersonalAccounts
+        // GET: Households
         public ActionResult Index()
         {
-            var personalAccounts = db.PersonalAccounts.Include(p => p.User).Include(p => p.Household);
-            return View(personalAccounts.ToList());
+            return View(db.Households.ToList());
         }
 
-        // GET: PersonalAccounts/Details/5
+        // GET: Households/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PersonalAccount personalAccount = db.PersonalAccounts.Find(id);
-            if (personalAccount == null)
+            Household household = db.Households.Find(id);
+            if (household == null)
             {
                 return HttpNotFound();
             }
-            return View(personalAccount);
+            return View(household);
         }
 
-        // GET: PersonalAccounts/Create
+        // GET: Households/Create
         public ActionResult Create()
         {
-            ViewBag.CreatedById = new SelectList(db.Users, "Id", "FirstName");
-            ViewBag.HouseholdId = new SelectList(db.Households, "Id", "Name");
             return View();
         }
 
-        // POST: PersonalAccounts/Create
+        // POST: Households/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,HouseholdId,Name,Balance,ReconciledBalance,CreatedById,IsDeleted")] PersonalAccount personalAccount)
+        public ActionResult Create([Bind(Include = "Id,Name")] Household household)
         {
             if (ModelState.IsValid)
             {
-                db.PersonalAccounts.Add(personalAccount);
+                db.Households.Add(household);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CreatedById = new SelectList(db.Users, "Id", "FirstName", personalAccount.CreatedById);
-            ViewBag.HouseholdId = new SelectList(db.Households, "Id", "Name", personalAccount.HouseholdId);
-            return View(personalAccount);
+            return View(household);
         }
 
-        // GET: PersonalAccounts/Edit/5
+        // GET: Households/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PersonalAccount personalAccount = db.PersonalAccounts.Find(id);
-            if (personalAccount == null)
+            Household household = db.Households.Find(id);
+            if (household == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CreatedById = new SelectList(db.Users, "Id", "FirstName", personalAccount.CreatedById);
-            ViewBag.HouseholdId = new SelectList(db.Households, "Id", "Name", personalAccount.HouseholdId);
-            return View(personalAccount);
+            return View(household);
         }
 
-        // POST: PersonalAccounts/Edit/5
+        // POST: Households/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,HouseholdId,Name,Balance,ReconciledBalance,CreatedById,IsDeleted")] PersonalAccount personalAccount)
+        public ActionResult Edit([Bind(Include = "Id,Name")] Household household)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(personalAccount).State = EntityState.Modified;
+                db.Entry(household).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CreatedById = new SelectList(db.Users, "Id", "FirstName", personalAccount.CreatedById);
-            ViewBag.HouseholdId = new SelectList(db.Households, "Id", "Name", personalAccount.HouseholdId);
-            return View(personalAccount);
+            return View(household);
         }
 
-        // GET: PersonalAccounts/Delete/5
+        // GET: Households/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PersonalAccount personalAccount = db.PersonalAccounts.Find(id);
-            if (personalAccount == null)
+            Household household = db.Households.Find(id);
+            if (household == null)
             {
                 return HttpNotFound();
             }
-            return View(personalAccount);
+            return View(household);
         }
 
-        // POST: PersonalAccounts/Delete/5
+        // POST: Households/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            PersonalAccount personalAccount = db.PersonalAccounts.Find(id);
-            db.PersonalAccounts.Remove(personalAccount);
+            Household household = db.Households.Find(id);
+            db.Households.Remove(household);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
