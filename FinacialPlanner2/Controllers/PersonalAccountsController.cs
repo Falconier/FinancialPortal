@@ -12,7 +12,7 @@ namespace FinacialPlanner2.Controllers
 {
     public class PersonalAccountsController : Controller
     {
-        private jacobemory_budgetdatabase db = new jacobemory_budgetdatabase();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: PersonalAccounts
         public ActionResult Index()

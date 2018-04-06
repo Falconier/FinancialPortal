@@ -18,6 +18,8 @@ namespace FinacialPlanner2.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         public AccountController()
         {
         }
@@ -152,18 +154,31 @@ namespace FinacialPlanner2.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
+                var result = await UserManager.CreateAsync(user, model.Password); //This saves the informtion to the database
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
+                    #region database transactions and invition aquasition
+                    //expanded version, simplified below
+                    //var userId = db.Users.Where(e => e.Email == user.Email).FirstOrDefault();
+
+                    //db.Invites.Where(e => e.Email == userId.Email);
+                    #endregion
+
+                    bool userHasUnusedIanvite = db.Invites.Any(e => e.Email == user.Email && !e.HasBeenUsed);
+                    string action = userHasUnusedIanvite ? "Join" : "Create";
+                   
+
                     
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction(action, "Household");
                 }
                 AddErrors(result);
             }

@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -22,6 +23,18 @@ namespace FinacialPlanner2.Models
 
         public string InviteEmail { get; set; }
 
+        public virtual ICollection<Household> Households { get; set; }
+        public virtual ICollection<PersonalAccount> PersonalAccounts { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
+        public virtual ICollection<Invite> Invites { get; set; }
+        public ApplicationUser()
+        {
+            PersonalAccounts = new HashSet<PersonalAccount>();
+            Transactions = new HashSet<Transaction>();
+            Invites = new HashSet<Invite>();
+            Households = new HashSet<Household>();
+
+        }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -42,5 +55,18 @@ namespace FinacialPlanner2.Models
         {
             return new ApplicationDbContext();
         }
+
+        public virtual DbSet<Budget> Budgets { get; set; }
+
+        public virtual DbSet<BudgetItem> BudgetItems { get; set; }
+
+        public virtual DbSet<Category> Categories { get; set; }
+
+        public virtual DbSet<Household> Households { get; set; }
+
+        public virtual DbSet<Invite> Invites { get; set; }
+        public virtual DbSet<PersonalAccount> PersonalAccounts { get; set; }
+
+        public virtual DbSet<Transaction> Transactions { get; set; }
     }
 }
