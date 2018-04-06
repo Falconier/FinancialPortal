@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FinacialPlanner2.Models;
+using Microsoft.AspNet.Identity;
 
 namespace FinacialPlanner2.Controllers
 {
@@ -56,6 +57,38 @@ namespace FinacialPlanner2.Controllers
             }
 
             return View(household);
+        }
+
+        public ActionResult Join()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Join(Invite invite)
+        {
+            if(ModelState.IsValid)
+            {
+                var user = db.Users.Find(User.Identity.GetUserId());
+
+                if(string.IsNullOrWhiteSpace(invite.Email))
+                {
+                    invite.Email = user.Email;
+                }
+                var dbInvite = db.Invites.FirstOrDefault(i => !i.HasBeenUsed && i.Email == invite.Email && i.HHToken == invite.HHToken); 
+
+                if(dbInvite != null)
+                {
+                    dbInvite.HasBeenUsed = true;
+                    user.HouseHoldId = dbInvite.HouseholdId;
+                    db.SaveChanges();
+                    return RedirectToAction("Details");
+                }
+                ModelState.AddModelError(string.Empty, "Invalid Invite Code. Please speak to the sender of the invite.");
+                return View(invite);
+            }
+
+            return View(invite);
         }
 
         // GET: Households/Edit/5

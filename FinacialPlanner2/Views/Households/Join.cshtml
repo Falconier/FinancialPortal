@@ -1,0 +1,14 @@
+﻿@model FinacialPlanner2.Models.Invite
+
+@{
+    ViewBag.Title = "Join";
+}
+
+<h2>Join</h2>
+
+@using (Html.BeginForm("Join", "Household", FormMethod.Post))
+{
+    @Html.AntiForgeryToken();
+
+    @Html.ValidationSummary();
+}
