@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FinacialPlanner2.Models;
+using FinacialPlanner2.Models.Helpers;
 using Microsoft.AspNet.Identity;
 
 namespace FinacialPlanner2.Controllers
@@ -108,6 +109,20 @@ namespace FinacialPlanner2.Controllers
             return View();
         }
 
+        public ActionResult CreateInvite()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateInvite()
+        {
+            InviteToken tok = new InviteToken();
+            tok.
+            return View();
+        }
 
         #region Editing
         // GET: Households/Edit/5
