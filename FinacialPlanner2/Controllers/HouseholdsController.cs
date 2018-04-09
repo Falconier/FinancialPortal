@@ -61,8 +61,18 @@ namespace FinacialPlanner2.Controllers
 
         public ActionResult Join()
         {
-            return View();
+            var user = db.Users.Find(User.Identity.GetUserId());
+            if (user.EmailConfirmed)
+            { 
+                return View();
+            }
+            else
+            {
+                RedirectToAction("PlsConfirmEmail");
+            }
         }
+
+        #region Join Post
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Join(Invite invite)
@@ -91,6 +101,15 @@ namespace FinacialPlanner2.Controllers
             return View(invite);
         }
 
+        #endregion
+
+        public ActionResult PlsConfirmEmail()
+        {
+            return View();
+        }
+
+
+        #region Editing
         // GET: Households/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -121,6 +140,8 @@ namespace FinacialPlanner2.Controllers
             }
             return View(household);
         }
+
+        #endregion
 
         // GET: Households/Delete/5
         public ActionResult Delete(int? id)

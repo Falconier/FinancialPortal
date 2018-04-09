@@ -154,7 +154,7 @@ namespace FinacialPlanner2.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password); //This saves the informtion to the database
+                var result = await UserManager.CreateAsync(user, model.Password); //This saves the informtion to the database11
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
