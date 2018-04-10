@@ -60,6 +60,8 @@ namespace FinacialPlanner2.Controllers
             return View(household);
         }
 
+
+        // TODO: Make Join View
         public ActionResult Join()
         {
             var user = db.Users.Find(User.Identity.GetUserId());
@@ -73,7 +75,7 @@ namespace FinacialPlanner2.Controllers
             }
         }
 
-        #region Join Post
+        #region Join Post Method
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Join(Invite invite)
