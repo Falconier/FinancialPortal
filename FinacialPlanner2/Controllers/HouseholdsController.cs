@@ -117,10 +117,19 @@ namespace FinacialPlanner2.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateInvite()
+        public ActionResult CreateInvite([Bind(Include = "Id,Name")] Household household)
         {
             InviteToken tok = new InviteToken();
-            tok.
+            string hht = tok.GenerateHHToken();
+            Invite nvt = new Invite()
+            {
+                HasBeenUsed = false,
+                HHToken = new Guid(hht),
+                InviteDate = DateTimeOffset.Now,
+                InvitedById = User.Identity.GetUserId(),
+                //hiddenFor for the HouseHoldId
+            };
+
             return View();
         }
 

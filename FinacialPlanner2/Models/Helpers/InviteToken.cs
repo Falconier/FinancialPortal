@@ -23,7 +23,7 @@ namespace FinacialPlanner2.Models.Helpers
         public string GenerateHHToken()
         {
             string finalHHToken = "";
-            int[] lengs = { 7, 4, 4, 4, 13 };
+            int[] lengs = { 8, 4, 4, 4, 12 };
             for (int i = 0; i < lengs.Length; i++)
             {
                 Random rdm = new Random((int)DateTime.Now.Ticks);
@@ -41,7 +41,8 @@ namespace FinacialPlanner2.Models.Helpers
         }
         private string GeneratePartialHHToken(int length, Random rnd)
         {
-            string chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            string chars = "0123456789ABCDEF0123456789ABCDEF";
+
             StringBuilder hhtoken = new StringBuilder(length);
             for (int i = 0; i < length; i++)
             {

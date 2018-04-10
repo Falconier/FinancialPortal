@@ -218,6 +218,7 @@
     <Compile Include="Models\Budget.cs" />
     <Compile Include="Models\BudgetItem.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Helpers\InviteToken.cs" />
     <Compile Include="Models\Household.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Invite.cs" />
@@ -306,6 +307,7 @@
     <Content Include="Views\Households\Index.cshtml" />
     <Content Include="Views\Households\Join.cshtml" />
     <Content Include="Views\Households\PlsConfirmEmail.cshtml" />
+    <Content Include="Views\Households\CreateInvite.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
